@@ -35,7 +35,7 @@ defmodule Xenakis.Sieve do
     |> Enum.take(take)
   end
 
-  defp invert(%__MODULE__{modulo: m, init: i, negation: true}) do
+  def invert(%__MODULE__{modulo: m, init: i, negation: true}) do
     for n <- 0..(m - 1), n != i do
       new(m, n)
     end

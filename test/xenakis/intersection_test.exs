@@ -1,7 +1,7 @@
 defmodule Xenakis.IntersectionTest do
   use ExUnit.Case
 
-  alias Xenakis.{Intersection, Sieve}
+  alias Xenakis.{Intersection, Sieve, Union}
 
   describe "new/1" do
     test "can take a list of sieves" do
@@ -82,6 +82,32 @@ defmodule Xenakis.IntersectionTest do
                48,
                52
              ]
+    end
+  end
+
+  describe "reduce" do
+    test "can reduce two intersections to a single sieve" do
+      intersection =
+        Intersection.new([
+          Sieve.new(3, 2),
+          Sieve.new(4, 7)
+        ])
+
+      assert Intersection.reduce(intersection) == Sieve.new(12, 11)
+    end
+
+    test "reducing against a negation returns a union of sieves" do
+      intersection =
+        Intersection.new([
+          Sieve.new(-3, 2),
+          Sieve.new(4, 0)
+        ])
+
+      assert Intersection.reduce(intersection) ==
+               Union.new([
+                 Sieve.new(12, 0),
+                 Sieve.new(12, 4)
+               ])
     end
   end
 end
