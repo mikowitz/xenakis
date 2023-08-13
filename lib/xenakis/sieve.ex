@@ -1,6 +1,9 @@
 defmodule Xenakis.Sieve do
   defstruct [:modulo, :init, negation: false]
 
+  def new({a, b}), do: new(a, b)
+  def new(%__MODULE__{} = s), do: s
+
   def new(modulo, init) when modulo < 0 do
     %__MODULE__{
       modulo: -modulo,

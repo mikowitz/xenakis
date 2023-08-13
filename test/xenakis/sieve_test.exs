@@ -3,7 +3,19 @@ defmodule Xenakis.SieveTest do
 
   alias Xenakis.Sieve
 
-  describe "new" do
+  describe "new/1" do
+    test "can be constructed from a tuple" do
+      assert Sieve.new({3, 2}) == Sieve.new(3, 2)
+    end
+
+    test "can be given an existing sieve" do
+      s = Sieve.new(3, 2)
+
+      assert Sieve.new(s) == s
+    end
+  end
+
+  describe "new/2" do
     test "negation is handled correctly" do
       assert Sieve.new(-3, 2) == %Sieve{modulo: 3, init: 2, negation: true}
     end
